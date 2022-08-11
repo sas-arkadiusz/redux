@@ -1,0 +1,12 @@
+1. Tworzenie: npx create-react-app redux-koszyk-demo
+2. Biblioteka do ściezek: npm i react-router-dom
+3. Zaleznosci Redux:
+npm i redux
+npm i react-redux
+npm i @reduxjs/toolkit
+
+Redux vs Redux-Toolkit:
+https://stackoverflow.com/questions/70478224/should-i-use-redux-or-redux-toolkit
+
+Kolejnosc wykonywania opearcji:
+User -> Action -> Reducer -> State
