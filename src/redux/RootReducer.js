@@ -2,30 +2,21 @@
 // Wykonuje na tej podstawie obliczenia i zwraca nowy stan.
 
 import { createSlice } from "@reduxjs/toolkit";
+import { loadState } from "./StorageHandler";
 
-// W przeciństwie do Store - w naszej aplikacji moze istniec
-// wiele reduktorow.
-
-// 1. Stworzenie obiektu koszyka
 const cartContent = [
     { id: 1, name: 'Laptop', price: 5000, amount: 1 },
     { id: 2, name: 'Keyboard', price: 200, amount: 2 },
 ];
 
-// 2. Stworzenie plasterka stanu koszyka
 const cartSlice = createSlice({
-    // 2.1. Nadanie nazwy plasterka
     name: 'cart',
-    // 2.2. Nadanie stanu początkowego
     initialState: {
-        // 2.3. Definiowanie pól w plasterku
-        cart: cartContent
+        //cart: cartContent
+        cart: loadState().cart.cart
     },
-    // 3. Tworzymy reduktory do manipulowania danymi w obrębie
-    //    platerka cart
     reducers: {
         addProduct: (state, action) => {
-            // akcja ma pole "payload", które przechowuje przesłane dane
             state.cart.push(action.payload);
         },
         changeAmount: (state, action) => {
@@ -38,7 +29,12 @@ const cartSlice = createSlice({
     }
 });
 
-//export const addProduct = cartSlice.actions.addProduct;
 export const { addProduct, changeAmount } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+/*
+1. Dodaj możliwość usuwania produktów z koszyka.
+2. Dodaj możliwość dodawania do koszyka.
+    1. Należy sprawdzić, czy produkt jest już w koszyku.
+*/
