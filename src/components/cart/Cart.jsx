@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { changeAmount } from "../../redux/RootReducer";
+import { changeAmount, removeProduct } from "../../redux/RootReducer";
 import store from "../../redux/Store";
 
 const Cart = () => {
@@ -14,6 +14,11 @@ const Cart = () => {
         store.dispatch(changeAmountHandler);
     }
 
+    const removeProductInCart = (id) => {
+        const removeProductHandler = removeProduct({ id: id});
+        store.dispatch(removeProductHandler);
+    }
+
     console.log(cartContent);
     return (
         <div>
@@ -25,6 +30,7 @@ const Cart = () => {
                                defaultValue={product.amount}
                                min={1}
                                onChange={event => changeAmountInCart(event, product.id)} />
+                        <button onClick={() => removeProductInCart(product.id)}>Usuń</button>
                     </div>)
             })}
         </div>

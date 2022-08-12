@@ -17,19 +17,45 @@ const cartSlice = createSlice({
     },
     reducers: {
         addProduct: (state, action) => {
-            state.cart.push(action.payload);
+            // 1. Sprawdzamy, czy produkt jest już w koszyku
+            let productInCart = false;
+            state.cart.forEach((product) => {
+                if (product.id === action.payload.id) {
+                    productInCart = true;
+                }
+            })
+
+            // 2. Jeżeli produkt jest już w koszyku to 
+            //    zwiększamy jego liczbę
+            if (productInCart) {
+                state.cart = state.cart.map((product) =>
+                    product.id === action.payload.id
+                        ? { ...product, amount: product.amount + 1 }
+                        : product
+                )
+            }
+            // 3. Jeżeli produktu nie było to dodajemy go do koszyka 
+            else {
+                state.cart.push(action.payload);
+            }
+
         },
         changeAmount: (state, action) => {
-            state.cart = state.cart.map((product) => 
+            state.cart = state.cart.map((product) =>
                 product.id === action.payload.id
-                ? { ...product, amount: action.payload.amount }
-                : product 
+                    ? { ...product, amount: action.payload.amount }
+                    : product
             )
+        },
+        removeProduct: (state, action) => {
+            state.cart = state.cart.filter((product) => {
+                return product.id !== action.payload.id
+            })
         }
     }
 });
 
-export const { addProduct, changeAmount } = cartSlice.actions;
+export const { addProduct, changeAmount, removeProduct } = cartSlice.actions;
 
 export default cartSlice.reducer;
 
